@@ -10,6 +10,7 @@ import Box from "@material-ui/core/Box";
 // Custom Components
 import MoviesTab from "../tabs/MoviesTab";
 import SearchResultsTab from "../tabs/SearchResultsTab";
+import TvShowsTab from "../tabs/TvShowsTab";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -65,7 +66,7 @@ export class TabNavigator extends Component {
           <SearchResultsTab />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Item Three
+          <TvShowsTab />
         </TabPanel>
       </Paper>
     );

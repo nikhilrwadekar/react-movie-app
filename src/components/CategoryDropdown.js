@@ -6,7 +6,12 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 
-export default function CategoryDrowndown({ menuItems, defaultValue, styles }) {
+export default function CategoryDropdown({
+  menuItems,
+  defaultValue,
+  styles,
+  onDropdownValueChange
+}) {
   return (
     <FormControl variant="outlined" className={styles.formControl}>
       <InputLabel>Category</InputLabel>
@@ -14,6 +19,7 @@ export default function CategoryDrowndown({ menuItems, defaultValue, styles }) {
         labelId="demo-simple-select-outlined-label"
         id="demo-simple-select-outlined"
         value={defaultValue}
+        onChange={onDropdownValueChange}
       >
         {menuItems &&
           menuItems.map(menuItem => (

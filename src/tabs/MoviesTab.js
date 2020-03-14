@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core";
-import CategoryDropdown from "../components/CategoryDrowndown";
+import CategoryDropdown from "../components/CategoryDropdown";
 const style = theme => ({
   formControl: {
     margin: theme.spacing(1),
