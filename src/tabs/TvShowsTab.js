@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 // Material UI
 import { withStyles } from "@material-ui/core";
+import Pagination from "@material-ui/lab/Pagination";
 
 // Custom Components
 import apiCall from "../api";
@@ -28,7 +29,8 @@ export class TvShowsTab extends Component {
         { value: "top_rated", label: "Top Rated" }
       ],
       tvShowCategory: "airing_today",
-      tvShows: []
+      tvShows: [],
+      pageNumber: 1
     };
   }
 
@@ -38,13 +40,16 @@ export class TvShowsTab extends Component {
 
   // Handle TV Show Category Change
   handleTvCategoryChange = e => {
-    this.setState({ tvShowCategory: e.target.value });
+    this.setState({ tvShowCategory: e.target.value, pageNumber: 1 });
     this.getAndSetTvShows(e.target.value);
   };
 
   // Get and Set TV Shows
-  getAndSetTvShows = async tvShowCategory => {
-    const tvShows = await apiCall(`/tv/${tvShowCategory}`);
+  getAndSetTvShows = async (tvShowCategory, pageNumber) => {
+    const tvShows = await apiCall(
+      `/tv/${tvShowCategory}`,
+      `&page=${pageNumber || 1}`
+    );
     this.setState({ tvShows: tvShows.results });
   };
 
@@ -59,7 +64,16 @@ export class TvShowsTab extends Component {
           menuItems={tvShowCategories}
           onDropdownValueChange={this.handleTvCategoryChange}
         />
-
+        {/* Display TV Shows based on Category! */}
+        <Pagination
+          count={15}
+          color="primary"
+          page={this.state.pageNumber}
+          onChange={(event, pageNumber) => {
+            this.getAndSetTvShows(this.state.tvShowCategory, pageNumber);
+            this.setState({ pageNumber });
+          }}
+        />
         {/* Display TV Shows based on Category! */}
         {tvShows &&
           tvShows.map(tvShow => {
@@ -80,6 +94,15 @@ export class TvShowsTab extends Component {
               />
             );
           })}
+        <Pagination
+          count={15}
+          color="primary"
+          page={this.state.pageNumber}
+          onChange={(event, pageNumber) => {
+            this.getAndSetTvShows(this.state.tvShowCategory, pageNumber);
+            this.setState({ pageNumber });
+          }}
+        />
       </div>
     );
   }
