@@ -14,8 +14,8 @@ export class SearchResultsTab extends Component {
       <>
         {/* Render if we have Search Results! */}
         {!!searchResults ? (
-          searchResults.map(searchResult => (
-            <h3>{searchResult.original_title}</h3>
+          searchResults.map((searchResult, key) => (
+            <h3 key={key}>{searchResult.original_title}</h3>
           ))
         ) : (
           <Typography>Not Found</Typography>

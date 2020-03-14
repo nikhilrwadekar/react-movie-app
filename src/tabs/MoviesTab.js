@@ -78,7 +78,7 @@ export class MoviesTab extends Component {
         />
 
         {movies &&
-          movies.map(movie => {
+          movies.map((movie, key) => {
             const {
               poster_path,
               popularity,
@@ -88,6 +88,7 @@ export class MoviesTab extends Component {
             } = movie;
             return (
               <MediaCard
+                key={key}
                 popularity={popularity}
                 title={original_title}
                 posterPath={poster_path}

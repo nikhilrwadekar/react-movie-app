@@ -31,8 +31,10 @@ export default function CategoryDropdown({
         labelWidth={labelWidth}
       >
         {menuItems &&
-          menuItems.map(menuItem => (
-            <MenuItem value={menuItem.value}>{menuItem.label}</MenuItem>
+          menuItems.map((menuItem, key) => (
+            <MenuItem key={key} value={menuItem.value}>
+              {menuItem.label}
+            </MenuItem>
           ))}
       </Select>
     </FormControl>

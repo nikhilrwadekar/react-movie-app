@@ -35,7 +35,6 @@ export class SearchBar extends Component {
 
   render() {
     const {
-      classes,
       searchType,
       onSearchInitiate,
       onSearchValueChange,

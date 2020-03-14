@@ -76,7 +76,7 @@ export class TvShowsTab extends Component {
         />
         {/* Display TV Shows based on Category! */}
         {tvShows &&
-          tvShows.map(tvShow => {
+          tvShows.map((tvShow, key) => {
             const {
               poster_path,
               popularity,
@@ -86,6 +86,7 @@ export class TvShowsTab extends Component {
             } = tvShow;
             return (
               <MediaCard
+                key={key}
                 popularity={popularity}
                 title={original_name}
                 posterPath={poster_path}

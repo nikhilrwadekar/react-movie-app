@@ -22,13 +22,11 @@ export class App extends Component {
 
   // Handle Search Value Change
   handleSearchValueChange = e => {
-    console.log("Search Value is: " + e.target.value);
     this.setState({ searchValue: e.target.value });
   };
 
   // Handle Search Type Change
   handleSearchTypeChange = e => {
-    console.log("Search Type is set to: " + e.target.value);
     this.setState({ searchType: e.target.value });
   };
 
