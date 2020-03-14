@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 // Material UI
 import { withStyles } from "@material-ui/core";
 
@@ -31,9 +30,11 @@ export class TvShowsTab extends Component {
     };
   }
 
+  componentDidMount() {}
+
   // Handle TV Category Change
   handleTvCategoryChange = e => {
-    console.log("TV Category was Changed!" + e.target.value);
+    this.setState({ tvShowCategory: e.target.value });
   };
 
   render() {
