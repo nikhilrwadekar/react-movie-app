@@ -6,15 +6,14 @@ import { withStyles } from "@material-ui/core";
 // Custom Components
 import apiCall from "../api";
 import CategoryDropdown from "../components/CategoryDropdown";
+import MediaCard from "../components/MediaCard";
 
 // Styles
 const style = theme => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2)
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   }
 });
 export class MoviesTab extends Component {
@@ -45,7 +44,7 @@ export class MoviesTab extends Component {
 
   // Get and Set Movies
   getAndSetMovies = async movieCategory => {
-    const movies = await apiCall(`/movie/${movieCategory}`, "movies");
+    const movies = await apiCall(`/movie/${movieCategory}`, "&region=CA");
     this.setState({ movies: movies.results });
   };
 
@@ -53,7 +52,7 @@ export class MoviesTab extends Component {
     const { classes } = this.props;
     const { movieCategories, movieCategory, movies } = this.state;
     return (
-      <>
+      <div className={classes.root}>
         <CategoryDropdown
           defaultValue={movieCategory}
           menuItems={movieCategories}
@@ -62,8 +61,27 @@ export class MoviesTab extends Component {
         />
 
         {/* Display Movies based on Category! */}
-        {movies && movies.map(movie => <h3>{movie.title}</h3>)}
-      </>
+
+        {movies &&
+          movies.map(movie => {
+            const {
+              poster_path,
+              popularity,
+              original_title,
+              overview,
+              release_date
+            } = movie;
+            return (
+              <MediaCard
+                popularity={popularity}
+                title={original_title}
+                posterPath={poster_path}
+                overview={overview}
+                releaseDate={release_date}
+              />
+            );
+          })}
+      </div>
     );
   }
 }

@@ -6,15 +6,14 @@ import { withStyles } from "@material-ui/core";
 // Custom Components
 import apiCall from "../api";
 import CategoryDropdown from "../components/CategoryDropdown";
+import MediaCard from "../components/MediaCard";
 
 // Styles
 const style = theme => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2)
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   }
 });
 export class TvShowsTab extends Component {
@@ -53,7 +52,7 @@ export class TvShowsTab extends Component {
     const { classes } = this.props;
     const { tvShowCategory, tvShowCategories, tvShows } = this.state;
     return (
-      <>
+      <div className={classes.root}>
         <CategoryDropdown
           defaultValue={tvShowCategory}
           styles={classes}
@@ -61,9 +60,27 @@ export class TvShowsTab extends Component {
           onDropdownValueChange={this.handleTvCategoryChange}
         />
 
-        {/* Display Movies based on Category! */}
-        {tvShows && tvShows.map(tvShow => <h3>{tvShow.original_name}</h3>)}
-      </>
+        {/* Display TV Shows based on Category! */}
+        {tvShows &&
+          tvShows.map(tvShow => {
+            const {
+              poster_path,
+              popularity,
+              original_name,
+              overview,
+              release_date
+            } = tvShow;
+            return (
+              <MediaCard
+                popularity={popularity}
+                title={original_name}
+                posterPath={poster_path}
+                overview={overview}
+                releaseDate={release_date}
+              />
+            );
+          })}
+      </div>
     );
   }
 }

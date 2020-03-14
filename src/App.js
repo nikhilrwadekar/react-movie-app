@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 
+// Material UI
+import Container from "@material-ui/core/Container";
+
 // Custom Components
 import AppHeader from "./components/AppHeader";
 import TabNavigator from "./components/TabNavigator";
 import SearchBar from "./components/SearchBar";
 import apiCall from "./api";
+
 export class App extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +45,7 @@ export class App extends Component {
   render() {
     const { searchValue, searchType, searchResults } = this.state;
     return (
-      <>
+      <Container>
         {/* App Header */}
         <AppHeader />
 
@@ -60,7 +64,7 @@ export class App extends Component {
           searchType={searchType}
           searchResults={searchResults}
         />
-      </>
+      </Container>
     );
   }
 }
