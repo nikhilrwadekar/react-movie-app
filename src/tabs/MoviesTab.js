@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 // Material UI
 import { withStyles } from "@material-ui/core";
+import Pagination from "@material-ui/lab/Pagination";
 
 // Custom Components
 import apiCall from "../api";
@@ -28,7 +29,8 @@ export class MoviesTab extends Component {
         { value: "upcoming", label: "Upcoming" }
       ],
       movieCategory: "now_playing",
-      movies: []
+      movies: [],
+      pageNumber: 1
     };
   }
 
@@ -38,13 +40,16 @@ export class MoviesTab extends Component {
 
   // Handle Movie Category Change
   handleMovieCategoryChange = e => {
-    this.setState({ movieCategory: e.target.value });
+    this.setState({ movieCategory: e.target.value, pageNumber: 1 });
     this.getAndSetMovies(e.target.value);
   };
 
   // Get and Set Movies
-  getAndSetMovies = async movieCategory => {
-    const movies = await apiCall(`/movie/${movieCategory}`, "&region=CA");
+  getAndSetMovies = async (movieCategory, pageNumber) => {
+    const movies = await apiCall(
+      `/movie/${movieCategory}`,
+      `&page=${pageNumber || 1}`
+    );
     this.setState({ movies: movies.results });
   };
 
@@ -61,6 +66,16 @@ export class MoviesTab extends Component {
         />
 
         {/* Display Movies based on Category! */}
+
+        <Pagination
+          count={15}
+          color="primary"
+          page={this.state.pageNumber}
+          onChange={(event, pageNumber) => {
+            this.getAndSetMovies(this.state.movieCategory, pageNumber);
+            this.setState({ pageNumber });
+          }}
+        />
 
         {movies &&
           movies.map(movie => {
@@ -81,6 +96,16 @@ export class MoviesTab extends Component {
               />
             );
           })}
+
+        <Pagination
+          count={15}
+          color="primary"
+          page={this.state.pageNumber}
+          onChange={(event, pageNumber) => {
+            this.getAndSetMovies(this.state.movieCategory, pageNumber);
+            this.setState({ pageNumber });
+          }}
+        />
       </div>
     );
   }
