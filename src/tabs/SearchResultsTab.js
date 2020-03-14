@@ -1,8 +1,13 @@
 import React, { Component } from "react";
+import { Typography } from "@material-ui/core";
 
 export class SearchResultsTab extends Component {
   render() {
-    return <div>Search Results Tab</div>;
+    return (
+      <>
+        <Typography variant="h5">Please initiate a search</Typography>
+      </>
+    );
   }
 }
 
