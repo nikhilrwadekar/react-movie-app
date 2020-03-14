@@ -1,7 +1,18 @@
 import React, { Component } from "react";
+
+// Custom Components
+import AppHeader from "./components/AppHeader";
+import TabNavigator from "./components/TabNavigator";
 export class App extends Component {
   render() {
-    return <div>React Movies App</div>;
+    return (
+      <>
+        {/* App Header */}
+        <AppHeader />
+        {/* The Main Tab - Movies, Search Results, TV Shows! */}
+        <TabNavigator />
+      </>
+    );
   }
 }
 
