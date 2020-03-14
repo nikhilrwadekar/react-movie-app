@@ -12,14 +12,21 @@ export default function CategoryDropdown({
   styles,
   onDropdownValueChange
 }) {
+  const inputLabel = React.useRef(null);
+  const [labelWidth, setLabelWidth] = React.useState(0);
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
+
   return (
     <FormControl variant="outlined" className={styles.formControl}>
-      <InputLabel>Category</InputLabel>
+      <InputLabel ref={inputLabel}>Category</InputLabel>
       <Select
         labelId="demo-simple-select-outlined-label"
         id="demo-simple-select-outlined"
         value={defaultValue}
         onChange={onDropdownValueChange}
+        labelWidth={labelWidth}
       >
         {menuItems &&
           menuItems.map(menuItem => (

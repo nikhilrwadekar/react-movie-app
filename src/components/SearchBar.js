@@ -26,7 +26,7 @@ export class SearchBar extends Component {
 
     this.state = {
       age: null,
-      labelWidth: 200
+      labelWidth: 90
     };
   }
 
