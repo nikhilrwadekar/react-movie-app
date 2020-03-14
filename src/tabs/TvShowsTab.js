@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+
 // Material UI
 import { withStyles } from "@material-ui/core";
 
 // Custom Components
+import apiCall from "../api";
 import CategoryDropdown from "../components/CategoryDropdown";
 
 // Styles
@@ -26,20 +28,30 @@ export class TvShowsTab extends Component {
         { value: "popular", label: "Popular" },
         { value: "top_rated", label: "Top Rated" }
       ],
-      tvShowCategory: "airing_today"
+      tvShowCategory: "airing_today",
+      tvShows: []
     };
   }
 
-  componentDidMount() {}
+  async componentDidMount() {
+    this.getAndSetTvShows(this.state.tvShowCategory);
+  }
 
-  // Handle TV Category Change
+  // Handle TV Show Category Change
   handleTvCategoryChange = e => {
     this.setState({ tvShowCategory: e.target.value });
+    this.getAndSetTvShows(e.target.value);
+  };
+
+  // Get and Set TV Shows
+  getAndSetTvShows = async tvShowCategory => {
+    const tvShows = await apiCall(`/tv/${tvShowCategory}`);
+    this.setState({ tvShows: tvShows.results });
   };
 
   render() {
     const { classes } = this.props;
-    const { tvShowCategory, tvShowCategories } = this.state;
+    const { tvShowCategory, tvShowCategories, tvShows } = this.state;
     return (
       <>
         <CategoryDropdown
@@ -48,6 +60,9 @@ export class TvShowsTab extends Component {
           menuItems={tvShowCategories}
           onDropdownValueChange={this.handleTvCategoryChange}
         />
+
+        {/* Display Movies based on Category! */}
+        {tvShows && tvShows.map(tvShow => <h3>{tvShow.original_name}</h3>)}
       </>
     );
   }

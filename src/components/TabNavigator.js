@@ -45,6 +45,7 @@ export class TabNavigator extends Component {
   };
 
   render() {
+    const { searchValue, searchType, searchResults } = this.props;
     const { value } = this.state;
     return (
       <Paper square>
@@ -63,7 +64,11 @@ export class TabNavigator extends Component {
           <MoviesTab />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <SearchResultsTab />
+          <SearchResultsTab
+            searchValue={searchValue}
+            searchType={searchType}
+            searchResults={searchResults}
+          />
         </TabPanel>
         <TabPanel value={value} index={2}>
           <TvShowsTab />
