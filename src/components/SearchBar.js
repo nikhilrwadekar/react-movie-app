@@ -3,11 +3,10 @@ import React, { Component } from "react";
 // Material UI
 import { withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
+
+// Custom Components
+import CategoryDropdown from "./CategoryDropdown";
 
 // Styles
 const style = theme => ({
@@ -25,21 +24,25 @@ export class SearchBar extends Component {
     super(props);
 
     this.state = {
-      age: null,
-      labelWidth: 90
+      searchTypes: [
+        { value: "movie", label: "Movies" },
+        { value: "multi", label: "Multi" },
+        { value: "tv", label: "TV Shows" }
+      ],
+      searchType: "movie"
     };
   }
 
   render() {
     const {
       classes,
+      searchType,
       onSearchInitiate,
       onSearchValueChange,
       onSearchTypeChange,
-      searchValue,
-      searchType
+      searchValue
     } = this.props;
-    const { labelWidth } = this.state;
+    const { searchTypes } = this.state;
     return (
       <>
         <TextField
@@ -49,20 +52,14 @@ export class SearchBar extends Component {
           value={searchValue}
           onChange={onSearchValueChange}
         />
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel>Search Type</InputLabel>
-          <Select
-            labelId="demo-simple-select-outlined-label"
-            id="demo-simple-select-outlined"
-            value={searchType}
-            onChange={onSearchTypeChange}
-            labelWidth={labelWidth}
-          >
-            <MenuItem value="movie">Movies</MenuItem>
-            <MenuItem value="multi">Movies & TV Shows</MenuItem>
-            <MenuItem value="tv">TV Shows</MenuItem>
-          </Select>
-        </FormControl>
+
+        <CategoryDropdown
+          menuItems={searchTypes}
+          onDropdownValueChange={onSearchTypeChange}
+          defaultValue={searchType}
+          styles
+          categoryName="Search Type"
+        />
         <Button
           variant="contained"
           size="large"
