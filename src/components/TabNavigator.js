@@ -35,7 +35,7 @@ export class TabNavigator extends Component {
 
     this.state = {
       // Set View to Movies by Default
-      value: 0
+      value: 1
     };
   }
 
