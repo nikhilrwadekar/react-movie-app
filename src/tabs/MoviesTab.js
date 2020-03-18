@@ -8,6 +8,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import apiCall from "../api";
 import CategoryDropdown from "../components/CategoryDropdown";
 import MediaCard from "../components/MediaCard";
+import Loader from "../components/Loader";
 
 // Styles
 const style = theme => ({
@@ -30,7 +31,8 @@ export class MoviesTab extends Component {
       ],
       movieCategory: "now_playing",
       movies: [],
-      pageNumber: 1
+      pageNumber: 1,
+      isLoading: false
     };
   }
 
@@ -46,69 +48,73 @@ export class MoviesTab extends Component {
 
   // Get and Set Movies
   getAndSetMovies = async (movieCategory, pageNumber) => {
+    this.setState({ isLoading: true });
     const movies = await apiCall(
       `/movie/${movieCategory}`,
       `&page=${pageNumber || 1}`
     );
-    this.setState({ movies: movies.results });
+    this.setState({ movies: movies.results, isLoading: false });
   };
 
   render() {
     const { classes } = this.props;
-    const { movieCategories, movieCategory, movies } = this.state;
-    return (
-      <div className={classes.root}>
-        <CategoryDropdown
-          defaultValue={movieCategory}
-          menuItems={movieCategories}
-          styles={classes}
-          onDropdownValueChange={this.handleMovieCategoryChange}
-        />
+    const { movieCategories, movieCategory, movies, isLoading } = this.state;
 
-        {/* Display Movies based on Category! */}
+    if (isLoading) return <Loader />;
+    else
+      return (
+        <div className={classes.root}>
+          <CategoryDropdown
+            defaultValue={movieCategory}
+            menuItems={movieCategories}
+            styles={classes}
+            onDropdownValueChange={this.handleMovieCategoryChange}
+          />
 
-        <Pagination
-          count={15}
-          color="primary"
-          page={this.state.pageNumber}
-          onChange={(event, pageNumber) => {
-            this.getAndSetMovies(this.state.movieCategory, pageNumber);
-            this.setState({ pageNumber });
-          }}
-        />
+          {/* Display Movies based on Category! */}
 
-        {movies &&
-          movies.map((movie, key) => {
-            const {
-              poster_path,
-              popularity,
-              original_title,
-              overview,
-              release_date
-            } = movie;
-            return (
-              <MediaCard
-                key={key}
-                popularity={popularity}
-                title={original_title}
-                posterPath={poster_path}
-                overview={overview}
-                releaseDate={release_date}
-              />
-            );
-          })}
+          <Pagination
+            count={15}
+            color="primary"
+            page={this.state.pageNumber}
+            onChange={(event, pageNumber) => {
+              this.getAndSetMovies(this.state.movieCategory, pageNumber);
+              this.setState({ pageNumber });
+            }}
+          />
 
-        <Pagination
-          count={15}
-          color="primary"
-          page={this.state.pageNumber}
-          onChange={(event, pageNumber) => {
-            this.getAndSetMovies(this.state.movieCategory, pageNumber);
-            this.setState({ pageNumber });
-          }}
-        />
-      </div>
-    );
+          {movies &&
+            movies.map((movie, key) => {
+              const {
+                poster_path,
+                popularity,
+                original_title,
+                overview,
+                release_date
+              } = movie;
+              return (
+                <MediaCard
+                  key={key}
+                  popularity={popularity}
+                  title={original_title}
+                  posterPath={poster_path}
+                  overview={overview}
+                  releaseDate={release_date}
+                />
+              );
+            })}
+
+          <Pagination
+            count={15}
+            color="primary"
+            page={this.state.pageNumber}
+            onChange={(event, pageNumber) => {
+              this.getAndSetMovies(this.state.movieCategory, pageNumber);
+              this.setState({ pageNumber });
+            }}
+          />
+        </div>
+      );
   }
 }
 

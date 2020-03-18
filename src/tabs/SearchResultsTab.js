@@ -14,21 +14,40 @@ export class SearchResultsTab extends Component {
   }
 
   render() {
-    const { searchValue, searchType, searchResults } = this.props;
+    const {
+      searchValue,
+      searchType,
+      searchResults,
+      searchInitiated,
+      searchCompleted
+    } = this.props;
     return (
       <>
-        {/* Render if we have Search Results! */}
-        {searchValue && searchResults.length === 0 ? (
+        {/* When the user starts typing in search */}
+        {searchValue && searchResults.length === 0 && (
           <Typography variant="h5">
             Click 'Search' to search for '{searchValue}' in '{searchType}'
           </Typography>
-        ) : (
-          searchResults.length === 0 && (
-            <Typography variant="h5">
-              Please start typing in 'Search'
-            </Typography>
-          )
         )}
+
+        {/* When the user is yet to type into Search */}
+        {searchResults.length === 0 &&
+          !searchInitiated &&
+          !searchValue &&
+          !searchCompleted && (
+            <Typography variant="h5">
+              Please start typing into 'Search'...
+            </Typography>
+          )}
+
+        {/* When search is completed without any Results */}
+        {searchCompleted && searchResults.length === 0 && !searchValue && (
+          <Typography variant="h5">
+            Sorry, nothing matched your search.
+          </Typography>
+        )}
+
+        {/* searchCompleted && searchResults.length === 0 */}
 
         {searchResults.length > 0 ? (
           searchResults.map((searchResult, key) => {

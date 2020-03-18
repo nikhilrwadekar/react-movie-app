@@ -35,7 +35,7 @@ export class TabNavigator extends Component {
 
     this.state = {
       // Set View to Movies by Default
-      value: 1
+      value: 0
     };
   }
 
@@ -45,11 +45,18 @@ export class TabNavigator extends Component {
   };
 
   render() {
-    const { searchValue, searchType, searchResults } = this.props;
+    const {
+      searchValue,
+      searchType,
+      searchResults,
+      searchCompleted,
+      searchInitiated
+    } = this.props;
     const { value } = this.state;
     return (
       <Paper square>
         <Tabs
+          variant="fullWidth"
           value={value}
           indicatorColor="primary"
           textColor="primary"
@@ -68,6 +75,8 @@ export class TabNavigator extends Component {
             searchValue={searchValue}
             searchType={searchType}
             searchResults={searchResults}
+            searchInitiated={searchInitiated}
+            searchCompleted={searchCompleted}
           />
         </TabPanel>
         <TabPanel value={value} index={2}>

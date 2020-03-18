@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
 
 // Custom Components
 import CategoryDropdown from "./CategoryDropdown";
@@ -16,6 +17,19 @@ const style = theme => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2)
+  },
+  search: {
+    display: "flex",
+    justifyContent: "center"
+  },
+  root: {
+    display: "flex",
+    justifyContent: "center"
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200
   }
 });
 
@@ -35,6 +49,7 @@ export class SearchBar extends Component {
 
   render() {
     const {
+      classes,
       searchType,
       onSearchInitiate,
       onSearchValueChange,
@@ -43,8 +58,9 @@ export class SearchBar extends Component {
     } = this.props;
     const { searchTypes } = this.state;
     return (
-      <>
+      <div className={classes.root}>
         <TextField
+          className={classes.textField}
           id="outlined-basic"
           label="Search"
           variant="outlined"
@@ -53,6 +69,7 @@ export class SearchBar extends Component {
         />
 
         <CategoryDropdown
+          className={classes.textField}
           menuItems={searchTypes}
           onDropdownValueChange={onSearchTypeChange}
           defaultValue={searchType}
@@ -60,6 +77,7 @@ export class SearchBar extends Component {
           categoryName="Search Type"
         />
         <Button
+          className={classes.textField}
           variant="contained"
           size="large"
           color="primary"
@@ -68,7 +86,7 @@ export class SearchBar extends Component {
         >
           Search
         </Button>
-      </>
+      </div>
     );
   }
 }

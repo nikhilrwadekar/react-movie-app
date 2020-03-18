@@ -8,12 +8,14 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles({
   root: {
     display: "flex",
+    // Make the Image and Content side by side
     flexDirection: "row",
     marginTop: 20,
     maxWidth: 900
   },
   poster: {
-    width: 300
+    // Max width for posters as the link gets an image with width 300!
+    maxWidth: 300
   },
   content: {
     display: "flex",

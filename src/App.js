@@ -16,7 +16,8 @@ export class App extends Component {
     this.state = {
       searchValue: "",
       searchType: "movie",
-      searchResults: []
+      searchResults: [],
+      searchInitiated: false
     };
   }
 
@@ -32,16 +33,31 @@ export class App extends Component {
 
   // Handle Search Initiation
   handleSearchInitiate = async () => {
+    this.setState({
+      searchInitiated: true
+    });
+
     const searchResults = await apiCall(
       `/search/${this.state.searchType}/`,
       `query=${this.state.searchValue}`
     );
 
-    this.setState({ searchResults: searchResults.results });
+    this.setState({
+      searchResults: searchResults.results,
+      searchInitiated: false,
+      searchCompleted: true,
+      searchValue: ""
+    });
   };
 
   render() {
-    const { searchValue, searchType, searchResults } = this.state;
+    const {
+      searchValue,
+      searchType,
+      searchResults,
+      searchInitiated,
+      searchCompleted
+    } = this.state;
     return (
       <Container>
         {/* App Header */}
@@ -58,6 +74,8 @@ export class App extends Component {
 
         {/* The Main Tab - Movies, Search Results, TV Shows! */}
         <TabNavigator
+          searchInitiated={searchInitiated}
+          searchCompleted={searchCompleted}
           searchValue={searchValue}
           searchType={searchType}
           searchResults={searchResults}
