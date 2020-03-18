@@ -60,61 +60,62 @@ export class MoviesTab extends Component {
     const { classes } = this.props;
     const { movieCategories, movieCategory, movies, isLoading } = this.state;
 
-    if (isLoading) return <Loader />;
-    else
-      return (
-        <div className={classes.root}>
-          <CategoryDropdown
-            defaultValue={movieCategory}
-            menuItems={movieCategories}
-            styles={classes}
-            onDropdownValueChange={this.handleMovieCategoryChange}
-          />
+    return (
+      <div className={classes.root}>
+        <CategoryDropdown
+          defaultValue={movieCategory}
+          menuItems={movieCategories}
+          styles={classes}
+          onDropdownValueChange={this.handleMovieCategoryChange}
+        />
 
-          {/* Display Movies based on Category! */}
+        {/* Display Movies based on Category! */}
 
-          <Pagination
-            count={15}
-            color="primary"
-            page={this.state.pageNumber}
-            onChange={(event, pageNumber) => {
-              this.getAndSetMovies(this.state.movieCategory, pageNumber);
-              this.setState({ pageNumber });
-            }}
-          />
+        <Pagination
+          count={15}
+          color="primary"
+          page={this.state.pageNumber}
+          onChange={(event, pageNumber) => {
+            this.getAndSetMovies(this.state.movieCategory, pageNumber);
+            this.setState({ pageNumber });
+          }}
+        />
 
-          {movies &&
-            movies.map((movie, key) => {
-              const {
-                poster_path,
-                popularity,
-                original_title,
-                overview,
-                release_date
-              } = movie;
-              return (
-                <MediaCard
-                  key={key}
-                  popularity={popularity}
-                  title={original_title}
-                  posterPath={poster_path}
-                  overview={overview}
-                  releaseDate={release_date}
-                />
-              );
-            })}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          movies.map((movie, key) => {
+            const {
+              poster_path,
+              popularity,
+              original_title,
+              overview,
+              release_date
+            } = movie;
+            return (
+              <MediaCard
+                key={key}
+                popularity={popularity}
+                title={original_title}
+                posterPath={poster_path}
+                overview={overview}
+                releaseDate={release_date}
+              />
+            );
+          })
+        )}
 
-          <Pagination
-            count={15}
-            color="primary"
-            page={this.state.pageNumber}
-            onChange={(event, pageNumber) => {
-              this.getAndSetMovies(this.state.movieCategory, pageNumber);
-              this.setState({ pageNumber });
-            }}
-          />
-        </div>
-      );
+        <Pagination
+          count={15}
+          color="primary"
+          page={this.state.pageNumber}
+          onChange={(event, pageNumber) => {
+            this.getAndSetMovies(this.state.movieCategory, pageNumber);
+            this.setState({ pageNumber });
+          }}
+        />
+      </div>
+    );
   }
 }
 

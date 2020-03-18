@@ -5,6 +5,7 @@ import { Typography, Grid } from "@material-ui/core";
 
 // Custom Components
 import MediaCard from "../components/MediaCard";
+import Loader from "../components/Loader";
 
 export class SearchResultsTab extends Component {
   constructor(props) {
@@ -47,6 +48,8 @@ export class SearchResultsTab extends Component {
               Sorry, nothing matched your search.
             </Typography>
           )}
+
+          {searchInitiated && !searchCompleted && <Loader />}
 
           {searchResults.length > 0 ? (
             searchResults.map((searchResult, key) => {

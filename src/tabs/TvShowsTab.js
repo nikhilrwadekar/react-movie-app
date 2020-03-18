@@ -8,6 +8,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import apiCall from "../api";
 import CategoryDropdown from "../components/CategoryDropdown";
 import MediaCard from "../components/MediaCard";
+import Loader from "../components/Loader";
 
 // Styles
 const style = theme => ({
@@ -30,7 +31,8 @@ export class TvShowsTab extends Component {
       ],
       tvShowCategory: "airing_today",
       tvShows: [],
-      pageNumber: 1
+      pageNumber: 1,
+      isLoading: false
     };
   }
 
@@ -46,16 +48,18 @@ export class TvShowsTab extends Component {
 
   // Get and Set TV Shows
   getAndSetTvShows = async (tvShowCategory, pageNumber) => {
+    this.setState({ isLoading: true });
+
     const tvShows = await apiCall(
       `/tv/${tvShowCategory}`,
       `&page=${pageNumber || 1}`
     );
-    this.setState({ tvShows: tvShows.results });
+    this.setState({ tvShows: tvShows.results, isLoading: false });
   };
 
   render() {
     const { classes } = this.props;
-    const { tvShowCategory, tvShowCategories, tvShows } = this.state;
+    const { tvShowCategory, tvShowCategories, tvShows, isLoading } = this.state;
     return (
       <div className={classes.root}>
         <CategoryDropdown
@@ -74,8 +78,13 @@ export class TvShowsTab extends Component {
             this.setState({ pageNumber });
           }}
         />
+
+        {/* Loader */}
+        {isLoading && <Loader />}
+
         {/* Display TV Shows based on Category! */}
         {tvShows &&
+          !isLoading &&
           tvShows.map((tvShow, key) => {
             const {
               poster_path,
