@@ -20,7 +20,7 @@ yarn
 
 ## Setup & Start!
 
-### Get your API Key at [The Movie DB API](https://developers.themoviedb.org/3)
+### Get your API Key at [The Movie DB API](https://developers.themoviedb.org/3) and add the following to your .env file
 
 ```
 REACT_APP_API_KEY="<API_KEY_GOES_HERE>"
